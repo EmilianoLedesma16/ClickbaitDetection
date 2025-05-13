@@ -1,0 +1,15 @@
+# Requisitos base
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+nltk
+jupyter
+imbalanced-learn
+
+# Opcional (para lematización avanzada con spaCy)
+spacy
+
+# Si decides usar WordCloud (en EDA)
+wordcloud
