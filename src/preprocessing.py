@@ -5,34 +5,39 @@ import spacy
 # Cargar el modelo de lenguaje en inglés
 nlp = spacy.load("en_core_web_sm")
 
-def clean_text_spacy(text, lowercase=True, remove_punct=True, remove_digits=True,
-                     remove_stopwords=True, lemmatize=True):
+def normalize_text(text, mode):
+    """
+    Normaliza el texto según el modo especificado.
+    Modes:
+        - "tokenization": Devuelve los tokens del texto.
+        - "text_cleaning": Aplica limpieza básica (minúsculas, sin puntuación, sin números).
+        - "remove_stopwords": Elimina stopwords.
+        - "lemmatization": Aplica lematización.
+    """
     if not isinstance(text, str):
         return ""
-    
-    # Paso 1: minúsculas
-    if lowercase:
-        text = text.lower()
-    
-    # Paso 2: quitar signos de puntuación
-    if remove_punct:
-        text = text.translate(str.maketrans('', '', string.punctuation))
-    
-    # Paso 3: quitar números
-    if remove_digits:
-        text = re.sub(r'\d+', '', text)
-    
-    # Paso 4: procesamiento con spaCy
-    doc = nlp(text)
-    
-    tokens = []
-    for token in doc:
-        if remove_stopwords and token.is_stop:
-            continue
-        if lemmatize:
-            tokens.append(token.lemma_)
-        else:
-            tokens.append(token.text)
 
-    # Devuelve el texto limpio
-    return ' '.join(tokens)
+    # Procesar el texto con spaCy
+    doc = nlp(text)
+
+    if mode == "tokenization":
+        # Devuelve una lista de tokens
+        return [token.text for token in doc]
+
+    elif mode == "text_cleaning":
+        # Minúsculas, sin puntuación, sin números
+        text = text.lower()
+        text = text.translate(str.maketrans('', '', string.punctuation))
+        text = re.sub(r'\d+', '', text)
+        return text
+
+    elif mode == "remove_stopwords":
+        # Devuelve una lista de tokens sin stopwords
+        return [token.text for token in doc if not token.is_stop]
+
+    elif mode == "lemmatization":
+        # Devuelve una lista de lemas
+        return [token.lemma_ for token in doc]
+
+    else:
+        raise ValueError("Modo de normalización no válido. Usa 'tokenization', 'text_cleaning', 'remove_stopwords' o 'lemmatization'.")
