@@ -1,11 +1,8 @@
-# src/preprocessing.py
-
 import re
 import string
 import spacy
 
-# Carga del modelo de lenguaje en inglés
-# Asegúrate de haber hecho: python -m spacy download en_core_web_sm
+# Cargar el modelo de lenguaje en inglés
 nlp = spacy.load("en_core_web_sm")
 
 def clean_text_spacy(text, lowercase=True, remove_punct=True, remove_digits=True,
