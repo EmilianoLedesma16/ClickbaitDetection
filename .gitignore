@@ -1,5 +1,6 @@
 # Ignorar el entorno virtual
 .venv/
+venv/
 
 # Ignorar archivos de datos (si no deseas subirlos)
 #data/
