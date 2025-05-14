@@ -3,7 +3,7 @@ import string
 import spacy
 
 # Cargar el modelo de lenguaje en inglés
-nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("es_core_news_sm")
 
 def normalize_text(text, mode):
     """
